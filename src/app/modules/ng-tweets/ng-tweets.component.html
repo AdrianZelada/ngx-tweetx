@@ -1,0 +1,40 @@
+<div class="scroll-tweets" *ngIf="tweets$ | async as tweetsList">				
+  <div class="panel panel-info" *ngIf="display">
+    <div class="panel-heading">
+      <div class="media">				        
+        <div class="media-body">
+          <div class="form-group has-feedback" [formGroup]="form">							
+            <input type="text" class="form-control" id="search" placeholder="Search by Hashtag" formControlName="q">
+            <span> <b>Search Type :</b></span>
+            <input type="radio" value="mixed" name="result_type" formControlName="result_type"> Mixed 
+            <input type="radio" value="recent" name="result_type" formControlName="result_type"> Recent
+            <input type="radio" value="popular" name="result_type" formControlName="result_type"> Popular            
+          </div>
+        </div>        
+      </div>
+    </div>
+    <div class="loading" *ngIf="isLoading">         
+        <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+    </div>  
+    <div >
+        <div class="filters" *ngIf="(tweetsList.length > 0) && !isLoading">          
+          <div class="media">				        
+            <div class="media-body">
+              <div class="form-group has-feedback" >							                    
+                <span> <b>Order By :</b></span>
+                <input type="radio" value="created" name="orderBy" [formControl]="orderBy"> Created 
+                <input type="radio" value="favorite" name="orderBy" [formControl]="orderBy"> Favorite
+                <input type="radio" value="retweet" name="orderBy" [formControl]="orderBy"> Retweets            
+              </div>
+            </div>                
+          </div>            
+        </div>    
+        <tweet *ngFor="let tweet of tweetsList" [id]="tweet.tweetId">						
+        </tweet>        
+        <div class="not-results" *ngIf="(tweetsList.length <= 0) && !isLoading">
+            <p>NOT RESULTS</p>            
+        </div>    
+    </div>                  
+  </div>		
+</div>
+
